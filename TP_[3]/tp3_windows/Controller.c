@@ -50,7 +50,6 @@ int controller_loadFromBinary(char* path , LinkedList* pArrayListEmployee)
 
 	if(auxP!=NULL)
 	{
-		puts("estoy dentro del NULL frombinary");
 		if(parser_EmployeeFromBinary(auxP, pArrayListEmployee)==0) //les paso a parser el puntero a archivo para que los transforme
 		{
 		retorno=0;
@@ -94,7 +93,6 @@ int controller_addEmployee(LinkedList* pArrayListEmployee)
 				auxid= ll_get(pArrayListEmployee, ll_len(pArrayListEmployee)-1);
 				employee_getId(auxid, &id);
 				id++;
-				printf("valor de id:%d\n",id);
 				nuevoEmpleado = employee_newParametrosAdd(id,nombreAux,horasAux,salarioAux);
 				retorno=0;
 			}
@@ -213,7 +211,7 @@ int controller_removeEmployee(LinkedList* pArrayListEmployee)
 
 			if(utn_getNumeroInt(&idBuscado, "Ingrese id a buscar:\n", "id Invalido.\n",1, 2000, 3)==0)
 			{
-				puts("hola");
+
 				id = Controller_buscarById(pArrayListEmployee, ll_len(pArrayListEmployee), idBuscado);
 
 				ll_remove(pArrayListEmployee, id);
@@ -444,7 +442,7 @@ int Controller_buscarById(LinkedList* pArrayList,int len, int IdBuscado)
 
 	if(pArrayList!=NULL && len>0 && IdBuscado>=0 && IdBuscado<=len)
 	{
-		puts("estot en buscar");
+
 		for(index=0; index<len ; index++)
 		{
 			aux = (Employee*)ll_get(pArrayList, index);

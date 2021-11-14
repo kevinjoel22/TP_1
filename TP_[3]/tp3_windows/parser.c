@@ -75,7 +75,7 @@ int parser_EmployeeFromTextEscritura(FILE* pFile , LinkedList* pArrayListEmploye
 				employee_getHorasTrabajadas(auxEmpleado, &hora)==0 &&
 				employee_getSueldo(auxEmpleado, &sueldo)==0)
 				{
-					puts("estoy dentro del fprintf");
+
 				fprintf(pFile,"%d,%s,%d,%d\n", id, nombre, hora, sueldo);
 				retorno=0;
 				}
@@ -110,7 +110,7 @@ int parser_EmployeeFromBinary(FILE* pFile , LinkedList* pArrayListEmployee)
 			{
 			ll_add(pArrayListEmployee, auxEmpleados);
 			retorno=0;
-			puts("estoy lladd");
+
 			}
 		}
 	}

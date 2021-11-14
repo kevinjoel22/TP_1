@@ -23,7 +23,6 @@ int main()
 	setbuf(stdout, NULL);
 
     int option = 0;
-    int id;
     LinkedList* listaEmpleados = ll_newLinkedList();
 
     do{
@@ -46,16 +45,19 @@ int main()
                 {
                 	printf("se cargaron los datos\n");
                 }
+                else
+                {
+                	puts("No hay datos que guardados");
+                }
                 break;
             case 2:
             	if(controller_loadFromBinary("data.bin", listaEmpleados)==0)
             	{
-            		puts("todo bien");
-
+            		puts("Se cargo en binario");
             	}
             	else
             	{
-            		puts("maaal");
+            		puts("Error, No hay datos que guardar");
             	}
             	break;
             case 3:
@@ -64,17 +66,29 @@ int main()
             	{
             		puts("Se cargo correctamente el empleado");
             	}
+            	else
+            	{
+            		puts("No se pudo carfar el empleado");
+            	}
             	break;
             case 4:
             	if(controller_editEmployee(listaEmpleados)==0)
             	{
             		puts("Se modifico correctamente");
             	}
+            	else
+            	{
+            		puts("No se pudo modificar");
+            	}
             	break;
             case 5:
             	if(controller_removeEmployee(listaEmpleados)==0)
             	{
             		puts("Se elimino correctamente el empleado");
+            	}
+            	else
+            	{
+            		puts("No se pudo eliminar");
             	}
             	break;
             case 6:
@@ -83,7 +97,7 @@ int main()
             		puts("Se listo correctamente");
             	}
             	else{
-            		puts("errrrrorrorororo");
+            		puts("No hay nada que listar");
             	}
             	break;
             case 7:
@@ -91,11 +105,19 @@ int main()
             	{
             		puts("Se ordeno correctamente");
             	}
+            	else
+            	{
+            		puts("No hay nada que ordenar");
+            	}
             	break;
             case 8:
             	if(controller_saveAsText("data.csv", listaEmpleados)==0)
             	{
             		puts("salio guardar en text bien");
+            	}
+            	else
+            	{
+            		puts("No se pudo guardar");
             	}
             	break;
             case 9:
