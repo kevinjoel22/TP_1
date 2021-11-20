@@ -23,6 +23,7 @@ int main()
 	setbuf(stdout, NULL);
 
     int option = 0;
+    int bandera=0;
     LinkedList* listaEmpleados = ll_newLinkedList();
 
     do{
@@ -44,6 +45,7 @@ int main()
                 if(controller_loadFromText("data.csv",listaEmpleados)==0)
                 {
                 	printf("se cargaron los datos\n");
+                	bandera=1;
                 }
                 else
                 {
@@ -54,6 +56,7 @@ int main()
             	if(controller_loadFromBinary("data.bin", listaEmpleados)==0)
             	{
             		puts("Se cargo en binario");
+            		bandera=1;
             	}
             	else
             	{

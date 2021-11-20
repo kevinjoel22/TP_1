@@ -91,7 +91,9 @@ int controller_addEmployee(LinkedList* pArrayListEmployee)
 			utn_getNumeroInt(&salarioAux, "Ingrese salario:\n  ", "Error\n",1, 100000, 3)==0)
 			{
 				auxid= ll_get(pArrayListEmployee, ll_len(pArrayListEmployee)-1);
+
 				employee_getId(auxid, &id);
+
 				id++;
 				nuevoEmpleado = employee_newParametrosAdd(id,nombreAux,horasAux,salarioAux);
 				retorno=0;
@@ -102,7 +104,6 @@ int controller_addEmployee(LinkedList* pArrayListEmployee)
 			retorno=0;
 		}
 	}
-
 	return retorno;
 }
 
@@ -278,6 +279,7 @@ int controller_sortEmployee(LinkedList* pArrayListEmployee)
 					{
 						retorno=0;
 					}
+
 					break;
 				case 2:
 					if(ll_sort(pArrayListEmployee, OrdenamientoPorhora, 1)==0)

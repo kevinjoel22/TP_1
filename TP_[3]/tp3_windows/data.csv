@@ -995,8 +995,6 @@ id,nombre,horasTrabajadas,sueldo
 994,Raquela,180,12000
 995,Maxi,325,18000
 996,Atalanta,90,37000
-997,De witt,88,12000
-998,Jaye,75,25000
 999,Tamarra,60,15000
 1000,Saleem,60,20000
 1001,asd,12,32
@@ -2002,3 +2000,4 @@ id,nombre,horasTrabajadas,sueldo
 1000,Saleem,60,20000
 1001,asd,12,32
 1002,ahree,23,54
+1003,gustavo,12,32
