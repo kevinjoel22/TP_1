@@ -13,16 +13,10 @@
 //prototipos de globales
 static int dameUnIdNuevo(void);
 static int selecionarcampoaModificar(int*selectedField);
-static int getANombreEmpleados (char empleadoNombre[]);
-static int getAApellidoEmpleados(char empleadosApellido[]);
-static int getEmpleadoSector(int *sectorEmpleado);
-static int getEmpleadoSalario(float *salarioEmpleado);
-static int selecionarModificar(void);
-
 #define OCUPADO 0
 #define VACIO 1
 #define INTENTOS 3
-#define NAME_AND_ADDRESS_LEN 128
+#define NAME_AND_ADDRESS_LEN 51
 
 
 //se inicializa por que hay basura en el array, y lo igualamos a 0 o lo dejamos libre.
@@ -95,7 +89,7 @@ int imprimir_empleados(Employes* pEmpleados)
 {
 	if(pEmpleados->isEmpty ==0)
 	{
-		printf("id: %d - %s - %d - %f - %s\n",pEmpleados->id, pEmpleados->nombre, pEmpleados->sector, pEmpleados->salario, pEmpleados->apellido);
+		printf("id: %d - nombre: %s - apellido: %s - salario: %f - sector: %d\n",pEmpleados->id, pEmpleados->nombre,pEmpleados->apellido , pEmpleados->salario, pEmpleados->sector);
 	}
 	return 1;
 }
@@ -147,21 +141,23 @@ int Eliminar_empleados(Employes Empleados[], int len, int IdBuscado)
 {
 	int status = -1;
 
-		status =1;
-		Empleados[IdBuscado].isEmpty=1;
+	status =1;
+	Empleados[IdBuscado].isEmpty=1;
+
 	return status;
 }
 //modifico posicion
 //llamo a funcion para seleccionar opcion
 //modifico opcion elegida
-int modificarEmpleados(Employes* pEmpleados)
+int modificarEmpleados(Employes* pEmpleados,int len, int indice)
 {
 	int status=-1;
 	int idamodificar;
-	int auxsector;
+	/*int auxsector;
 	float auxsalario;
 	char auxnombre[NAME_AND_ADDRESS_LEN];
-	char auxapellido[NAME_AND_ADDRESS_LEN];
+	char auxapellido[NAME_AND_ADDRESS_LEN];*/
+	Employes auxEmpleados;
 	if(pEmpleados !=NULL)
 	{
 		if(selecionarcampoaModificar(&idamodificar)==1)
@@ -170,27 +166,35 @@ int modificarEmpleados(Employes* pEmpleados)
 			switch (idamodificar)
 			{
 			case 1:
-				if(getEmpleadoSector(&auxsector)==1)
+				if(utn_getText(auxEmpleados.nombre,  NAME_AND_ADDRESS_LEN,"Ingrese nuevo nombre\n", "Error,Ingrese nuevo nombre\n", 2)==0)
 				{
-					pEmpleados->sector =auxsector;
+					strcpy(pEmpleados[indice].nombre,auxEmpleados.nombre);
+					puts("se modifico correctamente");
+					status=0;
 				}
 				break;
 			case 2:
-				if(getEmpleadoSalario(&auxsalario)==1)
+				if(utn_getText(auxEmpleados.apellido, NAME_AND_ADDRESS_LEN, "ingrese nuevo apellido:\n", "Error,Ingrese nuevo apellido\n", 2)==0)
 				{
-					pEmpleados->salario = auxsalario;
+					strcpy(pEmpleados[indice].apellido,auxEmpleados.apellido);
+					puts("se modifico correctamente");
+					status=0;
 				}
 				break;
 			case 3:
-				if(getANombreEmpleados(auxnombre)==1)
+				if(utn_getNumeroFloat(&auxEmpleados.salario, "Ingrese nuevo salario:\n", "Error,Ingrese nuevo salario", 1, 10000, 2)==0)
 				{
-					strncpy(pEmpleados->nombre, auxnombre, NAME_AND_ADDRESS_LEN);
+					pEmpleados[indice].salario=auxEmpleados.salario;
+					puts("se modifico correctamente");
+					status=0;
 				}
 				break;
 			case 4:
-				if(getAApellidoEmpleados(auxapellido)==1)
+				if(utn_getNumeroInt(&auxEmpleados.sector, "Ingrese nuevo sector:\n", "Error,Ingrese nuevo sector", 1, 10000, 2)==0)
 				{
-					strncpy(pEmpleados->apellido, auxapellido, NAME_AND_ADDRESS_LEN);
+					pEmpleados[indice].sector=auxEmpleados.sector;
+					puts("se modifico correctamente");
+					status=0;
 				}
 				break;
 			}
@@ -206,7 +210,7 @@ static int selecionarcampoaModificar(int*selectedField)
 	int status=-1;
 	int auxSelecionItem;
 
-	if(utn_getNumeroInt(&auxSelecionItem, "\nElegi la opcion:\n 1-sector\n 2-salario\n 3-nombre\n 4-apellido\n ", "Error",1 , 4, 2)==0)
+	if(utn_getNumeroInt(&auxSelecionItem, "\nElegi la opcion:\n 1-nombre\n 2-apellido\n 3-salario\n 4-sector\n ", "Error",1 , 4, 2)==0)
 	{
 		status =1;
 		*selectedField= auxSelecionItem;
@@ -221,78 +225,13 @@ static int selecionarModificar(void)
 	int status;
 	int auxSelecionItem;
 
-	if(utn_getNumeroInt(&auxSelecionItem, "\n0)Ordenar A-Z:\n 1)ordenar Z-A\n", "Error",0 , 1, 1)==0)
+	if(utn_getNumeroInt(&auxSelecionItem, "\n0)Ordenar ascendente:\n 1)ordenar descendente:\n", "Error",0 , 1, 1)==0)
 	{
 		status = auxSelecionItem;
 	}
 	return status;
 }
-//funcion privada del archivo
-//llamo funcion pedir char
-//retorno por puntero el valor ingresado para la funcion modificar
-static int getANombreEmpleados (char empleadoNombre[])
-{
-	int status =-1;
-	char mensaje[180];
-	char auxNombre[NAME_AND_ADDRESS_LEN];
-	strncpy(mensaje, "\nIngrese nombre del empleado: ",sizeof(mensaje));
-	if(utn_getText(auxNombre, NAME_AND_ADDRESS_LEN , mensaje, "Error",1)==0)
-	{
-		status =1;
-		strncpy(empleadoNombre, auxNombre, NAME_AND_ADDRESS_LEN);
-	}
-	return status;
-}
 
-//funcion privada del archivo
-//llamo funcion pedir char
-//retorno por puntero el valor ingresado para la funcion modificar
-static int getAApellidoEmpleados(char empleadosApellido[])
-{
-	int status =-1;
-	char mensaje[180];
-	char auxapellido[NAME_AND_ADDRESS_LEN];
-	strncpy(mensaje, "\nIngrese apellido del empleado:",sizeof(mensaje));
-	if(utn_getText(auxapellido, NAME_AND_ADDRESS_LEN , mensaje, "Error",1)==0)
-	{
-		status =1;
-		strncpy(empleadosApellido, auxapellido, NAME_AND_ADDRESS_LEN);
-	}
-	return status;
-}
-//funcion privada del archivo
-//llamo funcion pedir int
-//retorno por puntero el valor ingresado para la funcion modificar
-static int getEmpleadoSector(int *sectorEmpleado)
-{
-	int status =-1;
-	char mensaje[180];
-	int auxsector;
-	strncpy(mensaje,"\nIngrese sector del empleado:", sizeof(mensaje));
-	if(utn_getNumeroInt(&auxsector, mensaje, "Error",0, 1, 3)==0)
-	{
-		status=1;
-		*sectorEmpleado=auxsector;
-	}
-	return status;
-}
-
-//funcion privada del archivo
-//llamo funcion pedir float
-//retorno por puntero el valor ingresado para la funcion modificar
-static int getEmpleadoSalario(float *salarioEmpleado)
-{
-	int status =-1;
-	char mensaje[NAME_AND_ADDRESS_LEN];
-	float auxsalario;
-	strncpy(mensaje,"\nIngrese precio por dia:", sizeof(mensaje));
-	if(utn_getNumeroFloat(&auxsalario, mensaje, "Error",1, 100000, 3)==0)
-	{
-		status=1;
-		*salarioEmpleado = auxsalario;
-	}
-	return status;
-}
 //funcion ordenamiento
 //llamo funcion seleccionar
 //ordeno dependiendo opcion ingresada
@@ -416,12 +355,12 @@ void menuEmployee (Employes list[], int len)
 								//pido que ingrese un numero a buscar
 								//verifico que exista
 								//llamo a la funcion modificar y imprimo
-								if (utn_getNumeroInt(&idIngresado, "\ningrese ID\n", "Error", 1, 9999, 5) ==0)
+								if (utn_getNumeroInt(&idIngresado, "\ningrese ID\n", "Error", 1, 9999, 2) ==0)
 								{
 									indexAModif = buscadorPorID(list,len,idIngresado);
 									if(indexAModif >=0)
 									{
-										modificarEmpleados(&list[indexAModif]);
+										modificarEmpleados(list, len,indexAModif);
 										imprimir_empleados(&list[indexAModif]);
 									}
 								}
@@ -468,7 +407,7 @@ void menuEmployee (Employes list[], int len)
 								//imprimo
 								if(cliente_ordenarApellidoSector(list, len)==0)
 								{
-									for(int index=0;index< len ;index++)
+									for(int index=0;index < len ;index++)
 									{
 										imprimir_empleados(&list[index]);
 									}
@@ -479,7 +418,6 @@ void menuEmployee (Employes list[], int len)
 							{
 								printf("\n No hay empleados ingresados\n");
 							}
-
 						break;
 					}
 				}

@@ -7,6 +7,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include "Biblioteca.h"
 #ifndef EMPLOYE_H_
 #define EMPLOYE_H_
 #define NOMBRE_Y_APELLIDO_LEN 51
@@ -26,7 +27,7 @@ int imprimir_empleados(Employes* pEmpleados);
 int buscadorPorID(Employes* pEmpleados, int len, int IdBuscado);
 int bucarLibre(Employes* pEmpleados, int len);
 int Eliminar_empleados(Employes pEmpleados[], int len, int IdBuscado);
-int modificarEmpleados(Employes* pEmpleados);
+int modificarEmpleados(Employes* pEmpleados,int len, int indice);
 void menuEmployee (Employes list[], int len);
 int promedio(Employes *list, int len);
 int cliente_ordenarNombreSector(Employes *array, int limite);
